@@ -5,7 +5,7 @@
 1. Install as dependency in Poetry by adding the following line to `pyproject.toml`
 
 ```toml
-autodocgen = { git = "" }
+autodocgen = { git = "https://github.com/Iodine98/autodocgen.git" }
 ```
 
 1. Create a `.env` file that contains your `OPENAI_KEY`
