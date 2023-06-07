@@ -15,22 +15,19 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
+
+    - name: Install poetry
+      run: curl -sSL https://install.python-poetry.org | python3 - --version=1.4.2
 
     - name: Set up Python 3.9
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3
       with:
-        python-version: 3.9
-
-    - name: Install Poetry
-      run: |
-        curl -sSL https://install.python-poetry.org | python3 -
-        export PATH="$HOME/.local/bin:$PATH"
-        source $HOME/.poetry/env
+        python-version: '3.9'
+        cache: 'poetry'
 
     - name: Install dependencies
-      run: |
-        poetry update
+      run: poetry -vv install --no-interaction --no-ansi
 
     - name: Run pytest
       run: |
