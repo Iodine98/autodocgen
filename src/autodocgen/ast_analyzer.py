@@ -10,7 +10,7 @@ import openai
 from src.autodocgen import DocGenDef
 
 if TYPE_CHECKING:
-    from method_visitor import FileVisitor
+    from file_visitor import FileVisitor
 dotenv.load_dotenv()
 Role = Union[Literal["user"], Literal["system"], Literal["assistant"]]
 
