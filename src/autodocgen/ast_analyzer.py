@@ -56,5 +56,11 @@ class ASTAnalyzer:
         if str_return:
             return new_code
 
+    @staticmethod
+    def add_docstring_to_ast(node, docstring):
+        clean_docstring = docstring.replace("\"\"\"", "")
+        docstring_node = ast.Expr(value=ast.Str(s=clean_docstring))
+        node.body.insert(0, docstring_node)
+
     def generate_documentation(self, method_visitor: 'MethodVisitor'):
         method_visitor.visit(self.tree)
