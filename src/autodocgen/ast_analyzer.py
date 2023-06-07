@@ -1,13 +1,18 @@
 import ast
 import os
 import re
-from _ast import FunctionDef, AST
+from _ast import AST
 from pathlib import Path
-from typing import Tuple, Union, Optional, Literal, TypedDict
+from typing import Union, Optional, Literal, TypedDict, TYPE_CHECKING
 
 import black
 import dotenv
 import openai
+
+from src.autodocgen import DocGenDef
+
+if TYPE_CHECKING:
+    from method_visitor import FileVisitor
 
 dotenv.load_dotenv()
 
@@ -99,15 +104,7 @@ class ASTAnalyzer:
         self.total_token_usage += self.latest_response.usage['total_tokens']
         return latest_message.content.strip()
 
-    @staticmethod
-    def get_signature(current_method: FunctionDef) -> str:
-        method_name: str = current_method.name
-        method_arguments: list[str] = list(map((lambda x: x.arg), current_method.args.args))
-        method_return_type = (
-            None if (current_method.returns is None) else current_method.returns.id)
-        return str(tuple((method_name, method_arguments, method_return_type)))
-
-    def write_file_from_ast(self, file_path: Union[(str, Path)], str_return=False) -> Optional[str]:
+    def write_file_from_ast(self, file_path: Union[str, Path], str_return=False) -> Optional[str]:
         new_code: str = ast.unparse(ast_obj=self.tree)
         new_code: str = black.format_str(new_code,
                                          mode=black.Mode(line_length=self.line_length))
@@ -118,10 +115,11 @@ class ASTAnalyzer:
             return new_code
         return None
 
-    def add_docstring_to_ast(self, node: FunctionDef, new_docstring: str):
+    @staticmethod
+    def add_docstring_to_ast(node: DocGenDef, new_docstring: str):
         existing_docstring = ast.get_docstring(node)
-        regex_match = re.search(r"\"\"\"([A-Za-z0-9-_\s(),:=*.'->]+)\"\"\"", new_docstring)
-        alt_match = re.search(r"```([A-Za-z0-9-_\s(),:=*.'->\"]+)```", new_docstring)
+        regex_match = re.search(r"\"\"\"([A-Za-z0-9-_\s(),:=*.'->\[\]]+)\"\"\"", new_docstring)
+        alt_match = re.search(r"```([A-Za-z0-9-_\s(),:=*.'->\[\]]+)```", new_docstring)
         if regex_match:
             clean_docstring = regex_match.group(1)
         elif alt_match:
@@ -134,5 +132,8 @@ class ASTAnalyzer:
         else:
             node.body.insert(0, docstring_node)
 
-    def generate_documentation(self, method_visitor):
-        method_visitor.visit(self.tree)
+    def remove_messages(self):
+        self.messages = [self.messages[0]]
+
+    def generate_documentation(self, file_visitor: 'FileVisitor'):
+        file_visitor.visit(self.tree)
