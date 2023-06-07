@@ -13,10 +13,6 @@ class MethodVisitor(ast.NodeVisitor):
     def visit_FunctionDef(self, node: FunctionDef) -> None:
         function_code = astor.to_source(node)
         response, _ = self.ast_analyzer.obtain_pydoc(function_code)
-        self.add_docstring_to_ast(node, docstring=response)
-        node.body.insert(0, node)
+        self.ast_analyzer.add_docstring_to_ast(node, docstring=response)
 
-    def add_docstring_to_ast(self, node, docstring):
-        clean_docstring = docstring.replace("\"\"\"", "")
-        docstring_node = ast.Expr(value=ast.Str(s=clean_docstring))
-        node.body.insert(0, docstring_node)
+
