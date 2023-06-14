@@ -1,7 +1,6 @@
 import base64
-import os
 import secrets
-import tempfile
+
 from _ast import AST
 from pathlib import Path
 
@@ -37,6 +36,7 @@ def load_from_file(ast_analyzer):
 
 def test_load_from_file(ast_analyzer, load_from_file):
     assert isinstance(ast_analyzer.tree, AST)
+
 
 
 def test_write_ast_to_file(ast_analyzer, load_from_file):
