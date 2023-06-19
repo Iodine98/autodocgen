@@ -267,7 +267,7 @@ class ASTAnalyzer:
         elif alt_match:
             clean_docstring = alt_match.group(1)
         else:
-            clean_docstring = "The docstring could not be extracted."
+            clean_docstring =  existing_docstring # "The docstring could not be extracted."
         docstring_node = ast.Expr(value=ast.Str(s=clean_docstring))
         if existing_docstring:
             node.body[0] = docstring_node
