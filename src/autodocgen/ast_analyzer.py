@@ -7,7 +7,7 @@ from typing import Union, Optional, Literal, TypedDict, TYPE_CHECKING
 import black
 import dotenv
 import openai
-from src.autodocgen import DocGenDef
+from autodocgen import DocGenDef
 
 if TYPE_CHECKING:
     from file_visitor import FileVisitor
