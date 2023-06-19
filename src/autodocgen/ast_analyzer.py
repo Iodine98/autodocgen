@@ -102,9 +102,9 @@ class ASTAnalyzer:
     default_messages: list[ChatMessage] = [
         ChatMessage(
             role="user",
-            content="Act as a Python software engineer that needs to write PyDoc for their modules,"
+            content="Act as a Python software engineer that needs to write Python Docstrings for their modules,"
                     " classes and methods.\n"
-                    "The PyDoc should be formatted as specified in PEP 257.\n"
+                    "The Docstrings should be formatted as Google Style Python Docstrings.\n"
                     "The example will follow.",
         )
     ]
