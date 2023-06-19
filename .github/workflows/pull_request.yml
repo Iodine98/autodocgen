@@ -29,6 +29,9 @@ jobs:
     - name: Install dependencies
       run: poetry -vv install --no-interaction --no-ansi
 
+    - name: Add current directory to PYTHONPATH
+      run: echo PYTHONPATH=. >> $GITHUB_ENV
+
     - name: Run pytest
       run: |
         poetry run pytest

@@ -37,6 +37,7 @@ def test_load_from_file(ast_analyzer, load_from_file):
     assert isinstance(ast_analyzer.tree, AST)
 
 
+
 def test_write_ast_to_file(ast_analyzer, load_from_file):
     file_path = Path("./src/autodocgen/ast_analyzer.py")
     file_contents: str = ast_analyzer.write_file_from_ast(file_path, str_return=True)

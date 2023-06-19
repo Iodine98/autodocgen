@@ -46,9 +46,11 @@ class ModelKwargs(TypedDict):
     n : Optional[int]
         The number of responses to generate.
     stop : Optional[Union[str, list]]
-        A string or list of strings that, when encountered in the generated response, will cause the response to end.
+        A string or list of strings that, when encountered in the generated response,
+        will cause the response to end.
     temperature : int
-        The "creativity" of the generated response, with higher values resulting in more diverse responses.
+        The "creativity" of the generated response,
+        with higher values resulting in more diverse responses.
     """
 
     max_tokens: int
@@ -74,7 +76,8 @@ class ASTAnalyzer:
 
     Methods:
     --------
-    __init__(self, model_kwargs: ModelKwargs=None, prepend_prompt: str=default_prepend_prompt, **kwargs)
+    __init__(self, model_kwargs: ModelKwargs=None, prepend_prompt: str=default_prepend_prompt,
+     **kwargs)
         Initializes an instance of the ASTAnalyzer class.
     load_ast_from_file(self, file_path: Union[str, Path])
         Loads a Python AST from a file.
@@ -99,7 +102,10 @@ class ASTAnalyzer:
     default_messages: list[ChatMessage] = [
         ChatMessage(
             role="user",
-            content="Act as a Python software engineer that needs to write PyDoc for their modules, classes and methods.\nThe PyDoc should be formatted as specified in PEP 257.\nThe example will follow.",
+            content="Act as a Python software engineer that needs to write PyDoc for their modules,"
+                    " classes and methods.\n"
+                    "The PyDoc should be formatted as specified in PEP 257.\n"
+                    "The example will follow.",
         )
     ]
     default_model_kwargs = ModelKwargs(
@@ -113,17 +119,18 @@ class ASTAnalyzer:
     default_prepend_prompt = "Write Pydoc for the function below and only return the PyDoc:\n\n"
 
     def __init__(
-        self,
-        model_kwargs: ModelKwargs = None,
-        prepend_prompt: str = default_prepend_prompt,
-        **kwargs
+            self,
+            model_kwargs: ModelKwargs = None,
+            prepend_prompt: str = default_prepend_prompt,
+            **kwargs
     ):
         """
         Initializes an instance of the class.
 
         Args:
             model_kwargs (ModelKwargs, optional): The model's keyword arguments. Defaults to None.
-            prepend_prompt (str, optional): The prompt to prepend to the input text. Defaults to default_prepend_prompt.
+            prepend_prompt (str, optional): The prompt to prepend to the input text.
+            Defaults to default_prepend_prompt.
             **kwargs: Additional keyword arguments.
 
         Raises:
@@ -224,7 +231,8 @@ class ASTAnalyzer:
 
         Args:
             file_path (Union[str, Path]): The path to the file.
-            str_return (bool, optional): Whether to return the new code as a string. Defaults to False.
+            str_return (bool, optional): Whether to return the new code as a string.
+            Defaults to False.
 
         Returns:
             Optional[str]: The new code as a string if str_return is True, otherwise None.
