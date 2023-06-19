@@ -1,6 +1,5 @@
 import base64
 import secrets
-
 from _ast import AST
 from pathlib import Path
 
