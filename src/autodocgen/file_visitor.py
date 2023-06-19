@@ -1,9 +1,10 @@
 import ast
+from _ast import FunctionDef, ClassDef, AST
 import logging
 import random
 import time
 import astor
-from _ast import FunctionDef, ClassDef, AST
+
 from openai.error import RateLimitError
 from src.autodocgen import DocGenDef
 from src.autodocgen.ast_analyzer import ASTAnalyzer
@@ -65,11 +66,12 @@ class MethodVisitor(ast.NodeTransformer):
                 An object of the FileVisitor class."""
         self.file_visitor = file_visitor
 
-    def visit_FunctionDef(self, node: FunctionDef) -> FunctionDef:
+    def visit_FunctionDef(self, node: FunctionDef) -> FunctionDef:  # pylint: disable=invalid-name
         """
         visit_FunctionDef(self, node: FunctionDef) -> FunctionDef
 
-            Visits a FunctionDef node and returns the result of the visit_def method of the file visitor object.
+            Visits a FunctionDef node and
+             returns the result of the visit_def method of the file visitor object.
 
             Parameters:
             -----------
@@ -84,7 +86,7 @@ class MethodVisitor(ast.NodeTransformer):
 
 
 class ClassVisitor(ast.NodeTransformer):
-    '''
+    """
     A class that visits and transforms the AST nodes of a Python module.
 
     Attributes:
@@ -99,34 +101,6 @@ class ClassVisitor(ast.NodeTransformer):
 
     """
 
-    def __init__(self, file_visitor: 'FileVisitor'):
-        """
-        Initializes a new instance of the ClassVisitor class.
-
-        Parameters:
-        -----------
-        file_visitor : 'FileVisitor'
-            An instance of the FileVisitor class.
-
-        """
-        self.file_visitor = file_visitor
-
-    def visit_ClassDef(self, node: ClassDef) -> ClassDef:
-        """
-        Visits and transforms the ClassDef node of the AST.
-
-        Parameters:
-        -----------
-        node : ClassDef
-            The ClassDef node of the AST.
-
-        Returns:
-        --------
-        ClassDef
-            The transformed ClassDef node of the AST.
-
-    '''
-
     def __init__(self, file_visitor: "FileVisitor"):
         """
         __init__(self, file_visitor: 'FileVisitor')
@@ -139,11 +113,12 @@ class ClassVisitor(ast.NodeTransformer):
                 An object of the FileVisitor class."""
         self.file_visitor = file_visitor
 
-    def visit_ClassDef(self, node: ClassDef) -> ClassDef:
+    def visit_ClassDef(self, node: ClassDef) -> ClassDef:  # pylint: disable=invalid-name
         """
         visit_ClassDef(self, node: ClassDef) -> ClassDef
 
-            Visits a ClassDef node and returns the result of the visit_def method of the file visitor object.
+            Visits a ClassDef node
+             and returns the result of the visit_def method of the file visitor object.
 
             Parameters:
             -----------
@@ -158,7 +133,7 @@ class ClassVisitor(ast.NodeTransformer):
 
 
 class FileVisitor:
-    '''
+    """
     A class that visits and transforms the AST nodes of a Python module.
 
     Attributes:
@@ -180,60 +155,6 @@ class FileVisitor:
         Visits and transforms the AST nodes of a Python module.
 
     """
-
-    def __init__(self, ast_analyzer: ASTAnalyzer):
-        """
-        Initializes a new instance of the FileVisitor class.
-
-        Parameters:
-        -----------
-        ast_analyzer : ASTAnalyzer
-            An instance of the ASTAnalyzer class.
-
-        """
-        self.ast_analyzer = ast_analyzer
-        self.class_visitor = ClassVisitor(self)
-        self.method_visitor = MethodVisitor(self)
-
-    def obtain_pydoc_wrapper(self, node: DocGenDef, source_code: str) -> str: """ Wraps the
-    obtain_pydoc method of the ASTAnalyzer class and handles RateLimitError exceptions.
-
-        Parameters:
-        -----------
-        node : DocGenDef
-            The DocGenDef node of the AST.
-        source_code : str
-            The source code of the Python module.
-
-        Returns:
-        --------
-        str
-            The PyDoc string of the Python module.
-
-        """
-        try:
-            return self.ast_analyzer.obtain_pydoc(source_code)
-        except RateLimitError:
-            time.sleep(random.randint(5, 10))
-            return self.obtain_pydoc_wrapper(node, source_code)
-
-    def visit_def(self, node: DocGenDef, str_type: str) -> DocGenDef:
-        """
-        Visits and transforms the DocGenDef node of the AST.
-
-        Parameters:
-        -----------
-        node : DocGenDef
-            The DocGenDef node of the AST.
-        str_type : str
-            The type of the node.
-
-        Returns:
-        --------
-        DocGenDef
-            The transformed DocGenDef node of the AST.
-
-    '''
 
     def __init__(self, ast_analyzer: ASTAnalyzer):
         """
