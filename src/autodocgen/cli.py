@@ -51,7 +51,7 @@ def process_python_file(file_path: Path, overwrite_file: bool, stem_suffix: str)
     logging.info("Executed in %ds", end_time - start_time)
 
 
-def process_directory(directory: Path, overwrite_file: bool, stem_suffix: str, disable_tqdm: bool):
+def process_directory(directory: Path, overwrite_file: bool, stem_suffix: str, disable_tqdm: bool, sleep_in_secs: int = 5):
     """
     Recursively process a directory by
      analyzing all Python files in the directory and its subdirectories.
@@ -75,6 +75,8 @@ def process_directory(directory: Path, overwrite_file: bool, stem_suffix: str, d
         for current_file in files:
             if current_file.suffix == ".py" and current_file.name != "__init__.py":
                 process_python_file(current_file, overwrite_file, stem_suffix)
+                time.sleep(5)
+
 
 
 def main():
