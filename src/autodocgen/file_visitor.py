@@ -6,12 +6,12 @@ import time
 import astor
 
 from openai.error import RateLimitError
-from autodocgen import DocGenDef
-from autodocgen.ast_analyzer import ASTAnalyzer
+from ..autodocgen import DocGenDef
+from ..autodocgen import ASTAnalyzer
 
 
 class MethodVisitor(ast.NodeTransformer):
-    '''
+    """
     A class that visits and transforms the AST nodes of a Python module.
 
     Attributes:
@@ -25,34 +25,6 @@ class MethodVisitor(ast.NodeTransformer):
         Visits and transforms the FunctionDef node of the AST.
 
     """
-
-    def __init__(self, file_visitor: 'FileVisitor'):
-        """
-        Initializes a new instance of the MethodVisitor class.
-
-        Parameters:
-        -----------
-        file_visitor : 'FileVisitor'
-            An instance of the FileVisitor class.
-
-        """
-        self.file_visitor = file_visitor
-
-    def visit_FunctionDef(self, node: FunctionDef) -> FunctionDef:
-        """
-        Visits and transforms the FunctionDef node of the AST.
-
-        Parameters:
-        -----------
-        node : FunctionDef
-            The FunctionDef node of the AST.
-
-        Returns:
-        --------
-        FunctionDef
-            The transformed FunctionDef node of the AST.
-
-    '''
 
     def __init__(self, file_visitor: "FileVisitor"):
         """

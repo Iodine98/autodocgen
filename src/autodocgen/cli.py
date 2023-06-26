@@ -21,7 +21,7 @@ def path_walk(directory: Path) -> tuple[list[Path], list[Path]]:
         root_path = Path(root)
         dir_paths = [root_path / d for d in dirs]
         file_paths = [root_path / f for f in files]
-        yield (dir_paths, file_paths)
+        yield dir_paths, file_paths
 
 
 def process_python_file(file_path: Path, overwrite_file: bool, stem_suffix: str):
