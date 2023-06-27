@@ -275,7 +275,7 @@ class ASTAnalyzer:
             clean_docstring = single_quote_match.group(1)
             logging.debug("Docstring was extracted using three single quotes")
         else:
-            clean_docstring = existing_docstring
+            clean_docstring = new_docstring
             logging.debug("The docstring could not be extracted.")
         docstring_node = ast.Expr(value=ast.Str(s=clean_docstring + "\n"))
         if existing_docstring:
