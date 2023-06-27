@@ -4,13 +4,15 @@ import re
 from _ast import AST
 from pathlib import Path
 from typing import Union, Optional, Literal, TypedDict, TYPE_CHECKING
+if TYPE_CHECKING:
+    from . import FileVisitor
+    from . import DocGenDef
+
+
 import black
 import dotenv
 import openai
 
-if TYPE_CHECKING:
-    from src.autodocgen import DocGenDef
-    from src.autodocgen import FileVisitor
 dotenv.load_dotenv()
 Role = Union[Literal["user"], Literal["system"], Literal["assistant"]]
 
@@ -246,7 +248,7 @@ class ASTAnalyzer:
         return None
 
     @staticmethod
-    def add_docstring_to_ast(node: "DocGenDef", new_docstring: str):
+    def add_docstring_to_ast(node: DocGenDef, new_docstring: str):
         """
         Adds a docstring to an abstract syntax tree (AST) node.
 
@@ -283,7 +285,7 @@ class ASTAnalyzer:
         """
         self.model_kwargs["messages"] = [self.model_kwargs["messages"][0]]
 
-    def generate_documentation(self, file_visitor: "FileVisitor"):
+    def generate_documentation(self, file_visitor: FileVisitor):
         """
         Generates documentation for the abstract syntax tree (AST).
 

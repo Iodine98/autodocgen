@@ -6,8 +6,10 @@ import time
 import astor
 
 from openai.error import RateLimitError
-from src.autodocgen import DocGenDef
-from src.autodocgen import ASTAnalyzer
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from . import DocGenDef
+    from . import ASTAnalyzer
 
 
 class MethodVisitor(ast.NodeTransformer):
