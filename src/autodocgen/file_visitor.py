@@ -169,7 +169,7 @@ class FileVisitor:
             time.sleep(random.randint(5, 10))
             return self.obtain_pydoc_wrapper(node, source_code)
 
-    def visit_def(self, node: "DocGenDef", str_type: str) -> DocGenDef:
+    def visit_def(self, node: "DocGenDef", str_type: str) -> "DocGenDef":
         """
         visit_def(self, node: DocGenDef, str_type: str) -> DocGenDef
 
