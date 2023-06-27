@@ -277,7 +277,7 @@ class ASTAnalyzer:
         else:
             clean_docstring = existing_docstring
             logging.debug("The docstring could not be extracted.")
-        docstring_node = ast.Expr(value=ast.Str(s=clean_docstring))
+        docstring_node = ast.Expr(value=ast.Str(s=clean_docstring + "\n"))
         if existing_docstring:
             node.body[0] = docstring_node
         else:
