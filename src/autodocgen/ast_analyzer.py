@@ -1,13 +1,14 @@
 import ast
+import logging
 import os
 import re
 from _ast import AST
 from pathlib import Path
 from typing import Union, Optional, Literal, TypedDict, TYPE_CHECKING
+
 if TYPE_CHECKING:
     from . import FileVisitor
     from . import DocGenDef
-
 
 import black
 import dotenv
@@ -260,16 +261,22 @@ class ASTAnalyzer:
             None
         """
         existing_docstring = ast.get_docstring(node)
-        regex_match = re.search(
-            '\\"\\"\\"([A-Za-z0-9-_\\s(),:=*.\'->\\[\\]\\"]+)\\"\\"\\"', new_docstring
-        )
-        alt_match = re.search("```([A-Za-z0-9-_\\s(),:=*.'->\\[\\]\\\"]+)```", new_docstring)
-        if regex_match:
-            clean_docstring = regex_match.group(1)
-        elif alt_match:
-            clean_docstring = alt_match.group(1)
+        double_quote_match = re.search('\\"\\"\\"([A-Za-z0-9-_\\s(),:=*.\'->\\[\\]\\"]+)\\"\\"\\"', new_docstring)
+        single_quote_match = re.search("'''([A-Za-z0-9-_\\s(),:=*.\'->\\[\\]\"]+)'''", new_docstring)
+        backtick_match = re.search("```([A-Za-z0-9-_\\s(),:=*.'->\\[\\]\\\"]+)```", new_docstring)
+
+        if double_quote_match:
+            clean_docstring = double_quote_match.group(1)
+            logging.debug("Docstring was extracted using three double quotes")
+        elif backtick_match:
+            clean_docstring = backtick_match.group(1)
+            logging.debug("Docstring was extracted using three backticks")
+        elif single_quote_match:
+            clean_docstring = single_quote_match.group(1)
+            logging.debug("Docstring was extracted using three single quotes")
         else:
-            clean_docstring =  existing_docstring # "The docstring could not be extracted."
+            clean_docstring = existing_docstring
+            logging.debug("The docstring could not be extracted.")
         docstring_node = ast.Expr(value=ast.Str(s=clean_docstring))
         if existing_docstring:
             node.body[0] = docstring_node
