@@ -7,7 +7,6 @@ from typing import Union, Optional, Literal, TypedDict, TYPE_CHECKING
 import black
 import dotenv
 import openai
-from ..autodocgen import DocGenDef
 
 if TYPE_CHECKING:
     from file_visitor import FileVisitor
@@ -246,7 +245,7 @@ class ASTAnalyzer:
         return None
 
     @staticmethod
-    def add_docstring_to_ast(node: DocGenDef, new_docstring: str):
+    def add_docstring_to_ast(node: "DocGenDef", new_docstring: str):
         """
         Adds a docstring to an abstract syntax tree (AST) node.
 
