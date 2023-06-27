@@ -4,8 +4,8 @@ import os
 import time
 from pathlib import Path
 from tqdm import tqdm
-from ..autodocgen import ASTAnalyzer
-from ..autodocgen import FileVisitor
+from .ast_analyzer import ASTAnalyzer
+from .file_visitor import FileVisitor
 
 
 def path_walk(directory: Path) -> tuple[list[Path], list[Path]]:
