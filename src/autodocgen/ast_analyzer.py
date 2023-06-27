@@ -261,9 +261,9 @@ class ASTAnalyzer:
             None
         """
         existing_docstring = ast.get_docstring(node)
-        double_quote_match = re.search('\\"\\"\\"([A-Za-z0-9-_\\s(),:=*.\'->\\[\\]\\"]+)\\"\\"\\"', new_docstring)
-        single_quote_match = re.search("'''([A-Za-z0-9-_\\s(),:=*.\'->\\[\\]\"]+)'''", new_docstring)
-        backtick_match = re.search("```([A-Za-z0-9-_\\s(),:=*.'->\\[\\]\\\"]+)```", new_docstring)
+        double_quote_match = re.search(r"\"\"\"([\s\S]*?)\"\"\"", new_docstring)
+        single_quote_match = re.search(r"'''([\s\S]*?)'''", new_docstring)
+        backtick_match = re.search(r"```([\s\S]*?)```", new_docstring)
 
         if double_quote_match:
             clean_docstring = double_quote_match.group(1)
@@ -277,7 +277,7 @@ class ASTAnalyzer:
         else:
             clean_docstring = existing_docstring
             logging.debug("The docstring could not be extracted.")
-        docstring_node = ast.Expr(value=ast.Str(s=clean_docstring))
+        docstring_node = ast.Expr(value=ast.Str(s=clean_docstring + "\n"))
         if existing_docstring:
             node.body[0] = docstring_node
         else:
