@@ -130,7 +130,7 @@ class FileVisitor:
 
     """
 
-    def __init__(self, ast_analyzer: ASTAnalyzer):
+    def __init__(self, ast_analyzer: "ASTAnalyzer"):
         """
         __init__(self, ast_analyzer: ASTAnalyzer)
 
@@ -145,7 +145,7 @@ class FileVisitor:
         self.class_visitor = ClassVisitor(self)
         self.method_visitor = MethodVisitor(self)
 
-    def obtain_pydoc_wrapper(self, node: DocGenDef, source_code: str) -> str:
+    def obtain_pydoc_wrapper(self, node: "DocGenDef", source_code: str) -> str:
         """
         obtain_pydoc_wrapper(self, node: DocGenDef, source_code: str) -> str
 
@@ -169,7 +169,7 @@ class FileVisitor:
             time.sleep(random.randint(5, 10))
             return self.obtain_pydoc_wrapper(node, source_code)
 
-    def visit_def(self, node: DocGenDef, str_type: str) -> DocGenDef:
+    def visit_def(self, node: "DocGenDef", str_type: str) -> DocGenDef:
         """
         visit_def(self, node: DocGenDef, str_type: str) -> DocGenDef
 
