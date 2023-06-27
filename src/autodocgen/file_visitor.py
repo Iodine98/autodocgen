@@ -6,8 +6,8 @@ import time
 import astor
 
 from openai.error import RateLimitError
-from ..autodocgen import DocGenDef
-from ..autodocgen import ASTAnalyzer
+from src.autodocgen import DocGenDef
+from src.autodocgen import ASTAnalyzer
 
 
 class MethodVisitor(ast.NodeTransformer):
