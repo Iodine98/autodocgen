@@ -5,8 +5,9 @@ import random
 import time
 import astor
 
-from openai.error import RateLimitError
+from openai.error import RateLimitError, APIConnectionError
 from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
     from . import DocGenDef
     from . import ASTAnalyzer
@@ -167,6 +168,11 @@ class FileVisitor:
             return self.ast_analyzer.obtain_pydoc(source_code)
         except RateLimitError:
             time.sleep(random.randint(5, 10))
+            return self.obtain_pydoc_wrapper(node, source_code)
+        except APIConnectionError as api_conn_error:
+            logging.warning(
+                "An api connection error has occurred: " + api_conn_error.error + "\nWaiting 30s to retry\n")
+            time.sleep(30)
             return self.obtain_pydoc_wrapper(node, source_code)
 
     def visit_def(self, node: "DocGenDef", str_type: str) -> "DocGenDef":
