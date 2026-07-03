@@ -4,7 +4,23 @@ version = "0.1.0"
 description = "Automatically generate documentation for Python code using OpenAI models."
 authors = ["Rohan Sobha <rohanraysobha@gmail.com>"]
 readme = "README.md"
+license = "MIT"
+homepage = "https://github.com/Iodine98/autodocgen"
+repository = "https://github.com/Iodine98/autodocgen"
+keywords = ["documentation", "docstring", "openai", "pydoc", "codegen"]
 packages = [{include = "autodocgen", from = "src"}]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Documentation",
+    "Topic :: Software Development :: Documentation",
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"
