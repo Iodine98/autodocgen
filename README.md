@@ -1,5 +1,15 @@
 # autodocgen
 
+## Installing from PyPI
+
+> Note: this package has not been published to PyPI yet. Once it is
+> published (see [#4](https://github.com/Iodine98/autodocgen/issues/4)),
+> it will become installable via:
+
+```sh
+pip install autodocgen
+```
+
 ## Documentation
 
 ### Installation
