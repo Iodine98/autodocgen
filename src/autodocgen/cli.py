@@ -1,6 +1,7 @@
 import argparse
 import logging
 import os
+import sys
 import time
 from pathlib import Path
 from tqdm import tqdm
@@ -105,7 +106,6 @@ def main():
     )
     parser.add_argument("--disable_tqdm", help="Disable the progress bar", action="store_true")
     args = parser.parse_args()
-    print(args)
     path: Path = Path(args.path)
     if path.is_file() and path.suffix == ".py":
         process_python_file(file_path=path, overwrite_file=args.overwrite, stem_suffix=args.suffix)
@@ -116,8 +116,12 @@ def main():
             stem_suffix=args.suffix,
             disable_tqdm=args.disable_tqdm,
         )
+    elif not path.exists():
+        print(f"Error: path '{path}' does not exist", file=sys.stderr)
+        sys.exit(1)
     else:
-        print("Invalid path or file type")
+        print(f"Error: '{path}' is not a Python file or a directory", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":
